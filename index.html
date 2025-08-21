@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>only once – Group Play</title>
+    <meta name="description" content="Play Just One in a browser with a random word or give a clue." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-screen="home">
+    <main id="app">
+      <!-- Home Screen -->
+      <section id="screen-home" class="screen">
+        <div class="center-col">
+          <h1 class="app-title">only once</h1>
+          <div class="actions">
+            <button id="btn-get-word" class="btn primary">Get a word</button>
+            <button id="btn-give-clue" class="btn">Give a clue</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Countdown Screen -->
+      <section id="screen-countdown" class="screen hidden" aria-live="polite">
+        <div class="display-area">
+          <div id="countdownNumber" class="display-text" aria-label="Countdown">3</div>
+        </div>
+        <div class="topbar">
+          <button class="btn ghost" id="btn-cancel-countdown" aria-label="Cancel">Home</button>
+        </div>
+      </section>
+
+      <!-- Display Screen (Word or Clue) -->
+      <section id="screen-display" class="screen hidden">
+        <div class="display-area">
+          <div id="displayText" class="display-text" role="status" aria-live="polite"></div>
+        </div>
+        <div class="topbar">
+          <button class="btn ghost" id="btn-back-home">Home</button>
+        </div>
+      </section>
+
+      <!-- Give a Clue Input Screen -->
+      <section id="screen-clue-input" class="screen hidden">
+        <form id="clueForm" class="center-col" autocomplete="off">
+          <label for="clueInput" class="label">Type your single-word clue</label>
+          <input id="clueInput" class="input" type="text" inputmode="latin" pattern="[^\s]+" placeholder="e.g., Mountain" maxlength="40" required />
+          <div class="actions">
+            <button type="submit" class="btn primary">Show clue</button>
+            <button type="button" class="btn" id="btn-cancel-clue">Cancel</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="./words.js"></script>
+    <script src="./app.js"></script>
+  </body>
+  </html>
+
+

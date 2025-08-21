@@ -1,0 +1,124 @@
+:root {
+  --bg: #0b0d0f;
+  --fg: #e8eaed;
+  --muted: #a1a6ad;
+  --accent: #6ee7b7;
+  --accent-2: #60a5fa;
+}
+
+* { box-sizing: border-box; }
+html, body, #app { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+}
+
+.screen {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 24px;
+}
+.hidden { display: none; }
+
+.center-col {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.app-title {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin: 0 0 8px;
+}
+
+.actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+.btn {
+  appearance: none;
+  border: 1px solid #2a2f36;
+  background: #13161a;
+  color: var(--fg);
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.05s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.btn:hover { background: #171b20; }
+.btn:active { transform: translateY(1px); }
+.btn.primary {
+  border-color: #1f6b4f;
+  background: linear-gradient(180deg, #1b4332, #0f2f24);
+  color: #d1fae5;
+}
+.btn.ghost { background: transparent; border-color: #2a2f36; color: var(--muted); }
+
+.input {
+  width: 100%;
+  background: #0f1216;
+  border: 1px solid #2a2f36;
+  border-radius: 12px;
+  color: var(--fg);
+  padding: 14px 16px;
+  outline: none;
+  font-size: 18px;
+}
+.input:focus { border-color: var(--accent-2); }
+
+.label { color: var(--muted); font-weight: 600; }
+
+/* Full-screen display */
+.display-area {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 6vmin;
+}
+.display-text {
+  width: 100%;
+  text-align: center;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--fg);
+  /* Base size; will be auto-fit by JS */
+  font-size: 10vmin;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.topbar {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+/* Bigger countdown numbers */
+#screen-countdown .display-text {
+  font-size: 22vmin;
+}
+
+/* Larger home screen buttons */
+#screen-home .btn {
+  padding: 16px 24px;
+  font-size: 18px;
+}
+
+/* Accessibility prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}
+
+
