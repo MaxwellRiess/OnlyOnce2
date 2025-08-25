@@ -15,6 +15,7 @@
   const displayText = document.getElementById('displayText');
   const clueForm = document.getElementById('clueForm');
   const clueInput = document.getElementById('clueInput');
+  const difficultySelect = document.getElementById('difficultySelect');
 
   let countdownTimer = null;
 
@@ -90,7 +91,9 @@
   // Actions
   btnGetWord.addEventListener('click', () => {
     startCountdown(3, () => {
-      const word = (window.pickRandomWord && window.pickRandomWord()) || 'Word';
+      const selected = difficultySelect ? difficultySelect.value : 'Any';
+      const difficulty = selected === 'Any' ? undefined : selected;
+      const word = (window.pickRandomWord && window.pickRandomWord(difficulty)) || 'Word';
       showFullScreenText(word);
     });
   });
