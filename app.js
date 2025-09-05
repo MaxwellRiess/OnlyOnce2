@@ -11,6 +11,7 @@
   const btnCancelCountdown = document.getElementById('btn-cancel-countdown');
   const btnBackHome = document.getElementById('btn-back-home');
   const btnCancelClue = document.getElementById('btn-cancel-clue');
+  const btnGlobalHome = document.getElementById('btn-global-home');
   const countdownNumber = document.getElementById('countdownNumber');
   const displayText = document.getElementById('displayText');
   const clueForm = document.getElementById('clueForm');
@@ -113,6 +114,13 @@
   });
 
   btnCancelClue.addEventListener('click', () => {
+    setScreen('home');
+    clueForm.reset();
+  });
+
+  // Persistent footer Home button
+  btnGlobalHome.addEventListener('click', () => {
+    cancelCountdown();
     setScreen('home');
     clueForm.reset();
   });

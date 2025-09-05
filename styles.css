@@ -1,9 +1,12 @@
 :root {
-  --bg: #0b0d0f;
-  --fg: #e8eaed;
-  --muted: #a1a6ad;
-  --accent: #6ee7b7;
-  --accent-2: #60a5fa;
+  /* Base palette */
+  --bg: #58355E; /* deep purple */
+  --fg: #EAE2B7; /* light sand */
+  --muted: #d9d1a8; /* softer sand for secondary text */
+  --accent: #F77F00; /* orange */
+  --accent-2: #FCBF49; /* golden */
+  --danger: #D62828; /* deep red for Home button */
+  --panel: #4b2e52; /* slightly darker panel */
 }
 
 * { box-sizing: border-box; }
@@ -39,14 +42,29 @@ body {
   letter-spacing: -0.02em;
   color: var(--fg);
   margin: 0 0 8px;
+  font-size: clamp(48px, 10vw, 96px);
+  line-height: 0.95;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.25), 0 6px 24px rgba(247,127,0,0.35);
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
 }
+
+/* Colorful fan flare behind the title */
+/* removed flare */
 
 .actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 
+/* Keep inputs and actions the same width */
+.center-col .input,
+.center-col .actions {
+  width: min(100%, 420px);
+}
+
 .btn {
   appearance: none;
-  border: 1px solid #2a2f36;
-  background: #13161a;
+  border: 1px solid rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.15);
   color: var(--fg);
   padding: 12px 18px;
   border-radius: 12px;
@@ -55,26 +73,53 @@ body {
   cursor: pointer;
   transition: transform 0.05s ease, background 0.2s ease, border-color 0.2s ease;
 }
-.btn:hover { background: #171b20; }
+.btn:hover { background: rgba(0,0,0,0.25); }
 .btn:active { transform: translateY(1px); }
 .btn.primary {
-  border-color: #1f6b4f;
-  background: linear-gradient(180deg, #1b4332, #0f2f24);
-  color: #d1fae5;
+  border-color: #c46a00;
+  background: linear-gradient(180deg, #F77F00, #c46a00);
+  color: #1b0f1d;
 }
-.btn.ghost { background: transparent; border-color: #2a2f36; color: var(--muted); }
+.btn.ghost { background: transparent; border-color: rgba(0,0,0,0.25); color: var(--muted); }
+
+/* Global Home footer button */
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+}
+.btn.home-full {
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  padding: 18px 24px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: linear-gradient(180deg, #D94a4a, #D62828);
+  box-shadow: 0 -2px 0 rgba(0,0,0,0.1);
+}
+.btn.home-full:hover { background: linear-gradient(180deg, #e05b5b, #d93a3a); }
+.btn.home-full:active { transform: none; }
+
+/* Hide footer on home screen */
+body[data-screen="home"] .footer { display: none; }
 
 .input {
   width: 100%;
-  background: #0f1216;
-  border: 1px solid #2a2f36;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(0,0,0,0.25);
   border-radius: 12px;
   color: var(--fg);
   padding: 14px 16px;
   outline: none;
   font-size: 18px;
 }
-.input:focus { border-color: var(--accent-2); }
+.input:focus { border-color: var(--accent-2); box-shadow: 0 0 0 3px rgba(252,191,73,0.25); }
 
 .label { color: var(--muted); font-weight: 600; }
 
@@ -99,11 +144,7 @@ body {
   word-break: normal;
 }
 
-.topbar {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-}
+.topbar { display: none; }
 
 /* Bigger countdown numbers */
 #screen-countdown .display-text {
