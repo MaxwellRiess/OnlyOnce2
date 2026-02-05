@@ -225,7 +225,6 @@ Mechanic
 Barber
 Baker
 Waiter
-Cashier
 Librarian
 Pasta
 Rice
@@ -416,8 +415,11 @@ Yacht
 Ferry
 Drone
 Sculpture
+Capital
+
 
 Hard
+Cashier
 Canyon
 Glacier
 Savanna
@@ -474,3 +476,5 @@ Parallax
 Liminality
 Anachronism
 Catalyst
+Antiquated
+Inflexible

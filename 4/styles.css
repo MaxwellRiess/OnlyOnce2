@@ -1,0 +1,460 @@
+:root {
+    /* Brutalist Color Palette */
+    --white: #ffffff;
+    --black: #000000;
+    --red: #ff0000;
+    --gray: #888888;
+    --light-gray: #f0f0f0;
+
+    /* Typography */
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'IBM Plex Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body,
+#app {
+    height: 100%;
+}
+
+body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-body);
+    overflow: hidden;
+}
+
+/* Brutalist Background */
+.brutal-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+.grid-lines {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, transparent 0%, transparent calc(100% - 1px), var(--light-gray) calc(100% - 1px)),
+        linear-gradient(0deg, transparent 0%, transparent calc(100% - 1px), var(--light-gray) calc(100% - 1px));
+    background-size: 100px 100px;
+}
+
+.diagonal-slice {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: var(--black);
+    clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+/* Screens */
+.screen {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    padding: 40px;
+    z-index: 1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Brutalist Layout */
+.brutal-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 40px;
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Title Block */
+.title-block {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.overline {
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    color: var(--gray);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.app-title {
+    font-family: var(--font-display);
+    font-size: clamp(80px, 18vw, 180px);
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+    color: var(--black);
+}
+
+.underline-accent {
+    display: block;
+    width: 80px;
+    height: 8px;
+    background: var(--red);
+    margin-top: 16px;
+}
+
+/* Control Block */
+.control-block {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.label {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--black);
+}
+
+.input {
+    background: transparent;
+    border: 3px solid var(--black);
+    color: var(--black);
+    padding: 12px 20px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    outline: none;
+    transition: none;
+    min-width: 120px;
+}
+
+.input:focus {
+    background: var(--black);
+    color: var(--white);
+}
+
+.input::placeholder {
+    color: var(--gray);
+}
+
+/* Actions Block */
+.actions-block {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    padding-left: 40px;
+}
+
+/* Buttons */
+.btn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font-display);
+}
+
+.brutal-btn {
+    padding: 20px 40px;
+    font-size: 24px;
+    letter-spacing: 0.05em;
+    transition: none;
+    text-align: left;
+}
+
+.brutal-btn.primary {
+    background: var(--red);
+    color: var(--white);
+    border: none;
+}
+
+.brutal-btn.primary:hover {
+    background: var(--black);
+}
+
+.brutal-btn.primary:active {
+    transform: translate(4px, 4px);
+}
+
+.brutal-btn.secondary {
+    background: transparent;
+    color: var(--black);
+    border: 3px solid var(--black);
+}
+
+.brutal-btn.secondary:hover {
+    background: var(--black);
+    color: var(--white);
+}
+
+.brutal-btn.ghost {
+    padding: 12px 20px;
+    font-size: 16px;
+    color: var(--white);
+    border: 2px solid var(--white);
+    background: transparent;
+}
+
+.brutal-btn.ghost:hover {
+    background: var(--white);
+    color: var(--black);
+}
+
+/* Decorative Text */
+.decorative-text {
+    position: fixed;
+    bottom: 100px;
+    right: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 0;
+}
+
+.decorative-text span {
+    font-family: var(--font-display);
+    font-size: 120px;
+    line-height: 0.9;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+}
+
+/* Display Areas */
+.display-area {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 40px;
+}
+
+/* Countdown */
+.countdown-brutal {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+}
+
+.countdown-num {
+    font-family: var(--font-display);
+    font-size: 50vmin;
+    line-height: 1;
+    color: var(--white);
+}
+
+.countdown-label {
+    font-family: var(--font-body);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--red);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    letter-spacing: 0.2em;
+}
+
+.display-text {
+    font-family: var(--font-display);
+    font-size: 10vmin;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Word Display */
+.word-brutal {
+    position: relative;
+    text-align: center;
+}
+
+.word-marker {
+    font-family: var(--font-body);
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    color: var(--gray);
+    margin-bottom: 20px;
+}
+
+.word-text {
+    font-size: clamp(60px, 20vmin, 200px);
+    color: var(--black);
+    position: relative;
+    z-index: 1;
+}
+
+.word-strike {
+    position: absolute;
+    top: 60%;
+    left: -10%;
+    right: -10%;
+    height: 20px;
+    background: var(--red);
+    transform: rotate(-3deg);
+    z-index: 0;
+}
+
+/* Brutalist Form */
+.brutal-form {
+    width: 100%;
+    max-width: 500px;
+    border: 5px solid var(--black);
+}
+
+.form-header {
+    background: var(--black);
+    color: var(--white);
+    padding: 20px 30px;
+    font-family: var(--font-display);
+    font-size: 28px;
+    letter-spacing: 0.05em;
+}
+
+.form-body {
+    padding: 40px 30px;
+    background: var(--white);
+}
+
+.form-body .label {
+    display: block;
+    margin-bottom: 16px;
+}
+
+.form-body .input {
+    width: 100%;
+    font-size: 20px;
+    padding: 16px 20px;
+}
+
+.form-actions {
+    display: flex;
+    border-top: 5px solid var(--black);
+}
+
+.form-actions .brutal-btn {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+}
+
+.form-actions .brutal-btn.secondary {
+    border: none;
+    border-left: 5px solid var(--black);
+}
+
+/* Topbar */
+.topbar {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    z-index: 10;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.btn.home-full {
+    width: 100%;
+    padding: 24px;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    border-top: 5px solid var(--black);
+    font-family: var(--font-display);
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+}
+
+.btn.home-full:hover {
+    background: var(--black);
+}
+
+body[data-screen="home"] .footer {
+    display: none;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .brutal-btn {
+        transition: none;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .brutal-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    .title-block {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .control-block {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .actions-block {
+        grid-column: 1;
+        grid-row: 3;
+        padding-left: 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .diagonal-slice {
+        display: none;
+    }
+
+    .decorative-text {
+        display: none;
+    }
+
+    .app-title {
+        font-size: 60px;
+    }
+
+    .brutal-btn {
+        padding: 16px 24px;
+        font-size: 18px;
+    }
+
+    .brutal-btn.ghost {
+        color: var(--black);
+        border-color: var(--black);
+    }
+
+    .brutal-btn.ghost:hover {
+        background: var(--black);
+        color: var(--white);
+    }
+}

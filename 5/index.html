@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ONE WORD – Glass Edition</title>
+    <meta name="description" content="Play Just One with a soft glass morphism aesthetic" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body data-screen="home">
+    <!-- Aurora Background -->
+    <div class="aurora-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <main id="app">
+        <!-- Home Screen -->
+        <section id="screen-home" class="screen">
+            <div class="center-col">
+                <div class="glass-card title-card">
+                    <div class="card-glow"></div>
+                    <h1 class="app-title">One Word</h1>
+                    <p class="subtitle">Association Game</p>
+                </div>
+
+                <div class="glass-card control-card">
+                    <label for="difficultySelect" class="label">
+                        <span class="label-dot"></span>
+                        Difficulty
+                    </label>
+                    <select id="difficultySelect" class="input glass-input">
+                        <option value="Any">Any</option>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+
+                <div class="actions">
+                    <button id="btn-get-word" class="btn glass-btn primary">
+                        <span class="btn-shine"></span>
+                        Get a Word
+                    </button>
+                    <button id="btn-give-clue" class="btn glass-btn secondary">
+                        Give a Clue
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Screen -->
+        <section id="screen-countdown" class="screen hidden" aria-live="polite">
+            <div class="display-area">
+                <div class="countdown-glass">
+                    <div class="countdown-ring-outer"></div>
+                    <div class="countdown-ring-inner"></div>
+                    <div id="countdownNumber" class="display-text countdown-num" aria-label="Countdown">3</div>
+                </div>
+            </div>
+            <div class="topbar">
+                <button class="btn glass-btn ghost" id="btn-cancel-countdown" aria-label="Cancel">← Back</button>
+            </div>
+        </section>
+
+        <!-- Display Screen (Word or Clue) -->
+        <section id="screen-display" class="screen hidden">
+            <div class="display-area">
+                <div class="glass-card word-card">
+                    <div class="card-glow large"></div>
+                    <div id="displayText" class="display-text word-text" role="status" aria-live="polite"></div>
+                </div>
+            </div>
+            <div class="topbar">
+                <button class="btn glass-btn ghost" id="btn-back-home">← Back</button>
+            </div>
+        </section>
+
+        <!-- Give a Clue Input Screen -->
+        <section id="screen-clue-input" class="screen hidden">
+            <form id="clueForm" class="center-col" autocomplete="off">
+                <div class="glass-card input-card">
+                    <div class="card-glow"></div>
+                    <label for="clueInput" class="label">
+                        <span class="label-dot"></span>
+                        Enter your clue
+                    </label>
+                    <input id="clueInput" class="input glass-input" type="text" inputmode="latin" pattern="[^\s]+"
+                        placeholder="One word only..." maxlength="40" required />
+                </div>
+                <div class="actions">
+                    <button type="submit" class="btn glass-btn primary">
+                        <span class="btn-shine"></span>
+                        Show Clue
+                    </button>
+                    <button type="button" class="btn glass-btn secondary" id="btn-cancel-clue">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <button id="btn-global-home" class="btn home-full" aria-label="Home">
+            Home
+        </button>
+    </footer>
+
+    <script src="../words.js"></script>
+    <script src="../app.js"></script>
+</body>
+
+</html>

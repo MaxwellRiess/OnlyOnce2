@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ONE WORD – Brutalist Edition</title>
+    <meta name="description" content="Play Just One with raw brutalist typography" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body data-screen="home">
+    <!-- Brutalist Background -->
+    <div class="brutal-bg">
+        <div class="grid-lines"></div>
+        <div class="diagonal-slice"></div>
+    </div>
+
+    <main id="app">
+        <!-- Home Screen -->
+        <section id="screen-home" class="screen">
+            <div class="brutal-layout">
+                <div class="title-block">
+                    <span class="overline">WORD GAME</span>
+                    <h1 class="app-title">ONE<br />WORD</h1>
+                    <span class="underline-accent"></span>
+                </div>
+
+                <div class="control-block">
+                    <div class="form-row">
+                        <label for="difficultySelect" class="label">LEVEL:</label>
+                        <select id="difficultySelect" class="input">
+                            <option value="Any">ANY</option>
+                            <option value="Easy">EASY</option>
+                            <option value="Medium">MED</option>
+                            <option value="Hard">HARD</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="actions-block">
+                    <button id="btn-get-word" class="btn brutal-btn primary">
+                        GET WORD →
+                    </button>
+                    <button id="btn-give-clue" class="btn brutal-btn secondary">
+                        GIVE CLUE
+                    </button>
+                </div>
+
+                <div class="decorative-text">
+                    <span>THINK</span>
+                    <span>FAST</span>
+                    <span>WIN</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Screen -->
+        <section id="screen-countdown" class="screen hidden" aria-live="polite">
+            <div class="display-area">
+                <div class="countdown-brutal">
+                    <div id="countdownNumber" class="display-text countdown-num" aria-label="Countdown">3</div>
+                    <div class="countdown-label">SEC</div>
+                </div>
+            </div>
+            <div class="topbar">
+                <button class="btn brutal-btn ghost" id="btn-cancel-countdown" aria-label="Cancel">← BACK</button>
+            </div>
+        </section>
+
+        <!-- Display Screen (Word or Clue) -->
+        <section id="screen-display" class="screen hidden">
+            <div class="display-area">
+                <div class="word-brutal">
+                    <div class="word-marker">THE WORD IS:</div>
+                    <div id="displayText" class="display-text word-text" role="status" aria-live="polite"></div>
+                    <div class="word-strike"></div>
+                </div>
+            </div>
+            <div class="topbar">
+                <button class="btn brutal-btn ghost" id="btn-back-home">← BACK</button>
+            </div>
+        </section>
+
+        <!-- Give a Clue Input Screen -->
+        <section id="screen-clue-input" class="screen hidden">
+            <form id="clueForm" class="brutal-form" autocomplete="off">
+                <div class="form-header">INPUT YOUR CLUE</div>
+                <div class="form-body">
+                    <label for="clueInput" class="label">ONE WORD ONLY:</label>
+                    <input id="clueInput" class="input" type="text" inputmode="latin" pattern="[^\s]+"
+                        placeholder="_____________" maxlength="40" required />
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn brutal-btn primary">
+                        SUBMIT →
+                    </button>
+                    <button type="button" class="btn brutal-btn secondary" id="btn-cancel-clue">
+                        CANCEL
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <button id="btn-global-home" class="btn home-full" aria-label="Home">
+            ← HOME
+        </button>
+    </footer>
+
+    <script src="../words.js"></script>
+    <script src="../app.js"></script>
+</body>
+
+</html>

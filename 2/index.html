@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ONE WORD – Synthwave Edition</title>
+    <meta name="description" content="Play Just One with retro 80s synthwave vibes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body data-screen="home">
+    <!-- Synthwave Background -->
+    <div class="synth-bg">
+        <div class="stars"></div>
+        <div class="sun"></div>
+        <div class="grid-floor"></div>
+        <div class="scan-lines"></div>
+    </div>
+
+    <main id="app">
+        <!-- Home Screen -->
+        <section id="screen-home" class="screen">
+            <div class="center-col">
+                <div class="title-container">
+                    <h1 class="app-title neon-text">
+                        <span class="glitch" data-text="ONE WORD">ONE WORD</span>
+                    </h1>
+                    <p class="tagline">// INITIALIZE GAME SEQUENCE</p>
+                </div>
+
+                <div class="control-panel">
+                    <label for="difficultySelect" class="label">
+                        <span class="label-icon">◆</span> DIFFICULTY LEVEL
+                    </label>
+                    <select id="difficultySelect" class="input">
+                        <option value="Any">ANY</option>
+                        <option value="Easy">EASY</option>
+                        <option value="Medium">MEDIUM</option>
+                        <option value="Hard">HARD</option>
+                    </select>
+                </div>
+
+                <div class="actions">
+                    <button id="btn-get-word" class="btn primary">
+                        <span class="btn-glow"></span>
+                        <span class="btn-text">▶ GET WORD</span>
+                    </button>
+                    <button id="btn-give-clue" class="btn secondary">
+                        <span class="btn-text">◈ GIVE CLUE</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Screen -->
+        <section id="screen-countdown" class="screen hidden" aria-live="polite">
+            <div class="display-area">
+                <div class="countdown-container">
+                    <div class="countdown-rings">
+                        <div class="ring ring-1"></div>
+                        <div class="ring ring-2"></div>
+                        <div class="ring ring-3"></div>
+                    </div>
+                    <div id="countdownNumber" class="display-text countdown-num" aria-label="Countdown">3</div>
+                </div>
+            </div>
+            <div class="topbar">
+                <button class="btn ghost" id="btn-cancel-countdown" aria-label="Cancel">◀ ABORT</button>
+            </div>
+        </section>
+
+        <!-- Display Screen (Word or Clue) -->
+        <section id="screen-display" class="screen hidden">
+            <div class="display-area">
+                <div class="word-display">
+                    <div class="chrome-bar top"></div>
+                    <div id="displayText" class="display-text word-text neon-text" role="status" aria-live="polite">
+                    </div>
+                    <div class="chrome-bar bottom"></div>
+                </div>
+            </div>
+            <div class="topbar">
+                <button class="btn ghost" id="btn-back-home">◀ RETURN</button>
+            </div>
+        </section>
+
+        <!-- Give a Clue Input Screen -->
+        <section id="screen-clue-input" class="screen hidden">
+            <form id="clueForm" class="center-col" autocomplete="off">
+                <div class="input-panel">
+                    <div class="panel-header">
+                        <span class="header-dot"></span>
+                        <span class="header-dot"></span>
+                        <span class="header-dot"></span>
+                        <span class="header-title">INPUT TERMINAL</span>
+                    </div>
+                    <label for="clueInput" class="label">ENTER SINGLE-WORD CLUE:</label>
+                    <input id="clueInput" class="input" type="text" inputmode="latin" pattern="[^\s]+"
+                        placeholder="▮ TYPE HERE..." maxlength="40" required />
+                </div>
+                <div class="actions">
+                    <button type="submit" class="btn primary">
+                        <span class="btn-glow"></span>
+                        <span class="btn-text">▶ TRANSMIT</span>
+                    </button>
+                    <button type="button" class="btn secondary" id="btn-cancel-clue">
+                        <span class="btn-text">✕ CANCEL</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <button id="btn-global-home" class="btn home-full" aria-label="Home">
+            <span class="home-icon">⌂</span> MAIN MENU
+        </button>
+    </footer>
+
+    <script src="../words.js"></script>
+    <script src="../app.js"></script>
+</body>
+
+</html>

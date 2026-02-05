@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ONE WORD – Art Deco Edition</title>
+  <meta name="description" content="Play Just One in elegant 1920s Art Deco style" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-screen="home">
+  <!-- Art Deco Ornamental Background -->
+  <div class="deco-bg">
+    <div class="sunburst"></div>
+    <div class="deco-lines"></div>
+  </div>
+
+  <main id="app">
+    <!-- Home Screen -->
+    <section id="screen-home" class="screen">
+      <div class="center-col">
+        <div class="title-frame">
+          <div class="deco-corner tl"></div>
+          <div class="deco-corner tr"></div>
+          <div class="deco-corner bl"></div>
+          <div class="deco-corner br"></div>
+          <h1 class="app-title">
+            <span class="shimmer">ONE WORD</span>
+          </h1>
+          <p class="subtitle">A Game of Association</p>
+        </div>
+        
+        <div class="control-group">
+          <label for="difficultySelect" class="label">Difficulty</label>
+          <select id="difficultySelect" class="input">
+            <option value="Any">Any</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
+        
+        <div class="actions">
+          <button id="btn-get-word" class="btn primary">
+            <span class="btn-deco left"></span>
+            Get a Word
+            <span class="btn-deco right"></span>
+          </button>
+          <button id="btn-give-clue" class="btn secondary">Give a Clue</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Countdown Screen -->
+    <section id="screen-countdown" class="screen hidden" aria-live="polite">
+      <div class="display-area">
+        <div class="countdown-ring">
+          <div id="countdownNumber" class="display-text" aria-label="Countdown">3</div>
+        </div>
+      </div>
+      <div class="topbar">
+        <button class="btn ghost" id="btn-cancel-countdown" aria-label="Cancel">Return</button>
+      </div>
+    </section>
+
+    <!-- Display Screen (Word or Clue) -->
+    <section id="screen-display" class="screen hidden">
+      <div class="display-area">
+        <div class="word-frame">
+          <div class="fan-accent"></div>
+          <div id="displayText" class="display-text" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+      <div class="topbar">
+        <button class="btn ghost" id="btn-back-home">Return</button>
+      </div>
+    </section>
+
+    <!-- Give a Clue Input Screen -->
+    <section id="screen-clue-input" class="screen hidden">
+      <form id="clueForm" class="center-col" autocomplete="off">
+        <div class="input-frame">
+          <label for="clueInput" class="label">Your Single-Word Clue</label>
+          <input id="clueInput" class="input" type="text" inputmode="latin" pattern="[^\s]+" placeholder="e.g., Mountain" maxlength="40" required />
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn primary">
+            <span class="btn-deco left"></span>
+            Reveal
+            <span class="btn-deco right"></span>
+          </button>
+          <button type="button" class="btn secondary" id="btn-cancel-clue">Cancel</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <button id="btn-global-home" class="btn home-full" aria-label="Home">
+      <span class="footer-ornament left"></span>
+      HOME
+      <span class="footer-ornament right"></span>
+    </button>
+  </footer>
+
+  <script src="../words.js"></script>
+  <script src="../app.js"></script>
+</body>
+</html>

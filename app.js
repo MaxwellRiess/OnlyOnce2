@@ -61,10 +61,20 @@
   function fitText(el) {
     const container = el.parentElement;
     if (!container) return;
-    const maxIterations = 10;
-    const fudge = 1.05; // breathing room
+
+    // Get the actual available space within the container (accounting for padding)
+    const containerStyle = getComputedStyle(container);
+    const paddingLeft = parseFloat(containerStyle.paddingLeft) || 0;
+    const paddingRight = parseFloat(containerStyle.paddingRight) || 0;
+    const paddingTop = parseFloat(containerStyle.paddingTop) || 0;
+    const paddingBottom = parseFloat(containerStyle.paddingBottom) || 0;
+
+    const availableWidth = container.clientWidth - paddingLeft - paddingRight;
+    const availableHeight = container.clientHeight - paddingTop - paddingBottom;
+
+    const maxIterations = 15;
     const minSize = 16; // px
-    const maxSize = Math.max(window.innerWidth, window.innerHeight); // upper bound
+    const maxSize = Math.min(availableWidth, availableHeight) * 2; // reasonable upper bound
 
     let low = minSize;
     let high = maxSize;
@@ -75,9 +85,14 @@
     for (let i = 0; i < maxIterations; i++) {
       const mid = Math.floor((low + high) / 2);
       el.style.fontSize = mid + 'px';
-      const { scrollWidth, scrollHeight } = el;
-      const { clientWidth, clientHeight } = container;
-      const fits = scrollWidth <= clientWidth && scrollHeight <= clientHeight;
+
+      // Force a reflow to get accurate measurements
+      const rect = el.getBoundingClientRect();
+      const textWidth = rect.width;
+      const textHeight = rect.height;
+
+      const fits = textWidth <= availableWidth && textHeight <= availableHeight;
+
       if (fits) {
         best = mid;
         low = mid + 1;
@@ -86,7 +101,8 @@
       }
     }
 
-    el.style.fontSize = Math.floor(best / fudge) + 'px';
+    // Apply the best fitting size with a small safety margin
+    el.style.fontSize = Math.floor(best * 0.95) + 'px';
   }
 
   // Actions

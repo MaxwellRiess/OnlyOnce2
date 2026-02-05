@@ -1,75 +1,117 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>only once – Group Play</title>
-    <meta name="description" content="Play Just One in a browser with a random word or give a clue." />
+    <title>ONE WORD – Paper Craft Edition</title>
+    <meta name="description" content="Play Just One with a warm, handmade paper aesthetic" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body data-screen="home">
+</head>
+
+<body data-screen="home">
+    <!-- Paper Background -->
+    <div class="paper-bg">
+        <div class="paper-texture"></div>
+        <div class="scattered-dots"></div>
+    </div>
+
     <main id="app">
-      <!-- Home Screen -->
-      <section id="screen-home" class="screen">
-        <div class="center-col">
-          <h1 class="app-title">ONE WORD</h1>
-          <label for="difficultySelect" class="label">Difficulty</label>
-          <select id="difficultySelect" class="input">
-            <option value="Any">Any</option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-          </select>
-          <div class="actions">
-            <button id="btn-get-word" class="btn primary">Get a word</button>
-            <button id="btn-give-clue" class="btn">Give a clue</button>
-          </div>
-        </div>
-      </section>
+        <!-- Home Screen -->
+        <section id="screen-home" class="screen">
+            <div class="center-col">
+                <div class="title-card">
+                    <div class="tape tape-left"></div>
+                    <div class="tape tape-right"></div>
+                    <h1 class="app-title">One Word</h1>
+                    <p class="subtitle">~ a word association game ~</p>
+                </div>
 
-      <!-- Countdown Screen -->
-      <section id="screen-countdown" class="screen hidden" aria-live="polite">
-        <div class="display-area">
-          <div id="countdownNumber" class="display-text" aria-label="Countdown">3</div>
-        </div>
-        <div class="topbar">
-          <button class="btn ghost" id="btn-cancel-countdown" aria-label="Cancel">Home</button>
-        </div>
-      </section>
+                <div class="sticky-note yellow">
+                    <label for="difficultySelect" class="label">Pick difficulty:</label>
+                    <select id="difficultySelect" class="input">
+                        <option value="Any">Any</option>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
 
-      <!-- Display Screen (Word or Clue) -->
-      <section id="screen-display" class="screen hidden">
-        <div class="display-area">
-          <div id="displayText" class="display-text" role="status" aria-live="polite"></div>
-        </div>
-        <div class="topbar">
-          <button class="btn ghost" id="btn-back-home">Home</button>
-        </div>
-      </section>
+                <div class="actions">
+                    <button id="btn-get-word" class="btn paper-btn primary">
+                        <span class="btn-icon">✎</span> Get a Word
+                    </button>
+                    <button id="btn-give-clue" class="btn paper-btn secondary">
+                        <span class="btn-icon">✏</span> Give a Clue
+                    </button>
+                </div>
+            </div>
+        </section>
 
-      <!-- Give a Clue Input Screen -->
-      <section id="screen-clue-input" class="screen hidden">
-        <form id="clueForm" class="center-col" autocomplete="off">
-          <label for="clueInput" class="label">Type your single-word clue</label>
-          <input id="clueInput" class="input" type="text" inputmode="latin" pattern="[^\s]+" placeholder="e.g., Mountain" maxlength="40" required />
-          <div class="actions">
-            <button type="submit" class="btn primary">Show clue</button>
-            <button type="button" class="btn" id="btn-cancel-clue">Cancel</button>
-          </div>
-        </form>
-      </section>
+        <!-- Countdown Screen -->
+        <section id="screen-countdown" class="screen hidden" aria-live="polite">
+            <div class="display-area">
+                <div class="countdown-circle">
+                    <div id="countdownNumber" class="display-text countdown-num" aria-label="Countdown">3</div>
+                </div>
+            </div>
+            <div class="topbar">
+                <button class="btn pill-btn" id="btn-cancel-countdown" aria-label="Cancel">← Back</button>
+            </div>
+        </section>
+
+        <!-- Display Screen (Word or Clue) -->
+        <section id="screen-display" class="screen hidden">
+            <div class="display-area">
+                <div id="displayText" class="display-text" role="status" aria-live="polite"></div>
+            </div>
+            <div class="topbar">
+                <button class="btn pill-btn" id="btn-back-home">← Back</button>
+            </div>
+        </section>
+
+        <!-- Give a Clue Input Screen -->
+        <section id="screen-clue-input" class="screen hidden">
+            <form id="clueForm" class="center-col" autocomplete="off">
+                <div class="notepad">
+                    <div class="notepad-header">
+                        <span class="spiral"></span>
+                        <span class="spiral"></span>
+                        <span class="spiral"></span>
+                        <span class="spiral"></span>
+                        <span class="spiral"></span>
+                    </div>
+                    <div class="notepad-body">
+                        <label for="clueInput" class="label">Write your clue here:</label>
+                        <input id="clueInput" class="input lined" type="text" inputmode="latin" pattern="[^\s]+"
+                            placeholder="one word only..." maxlength="40" required />
+                    </div>
+                </div>
+                <div class="actions">
+                    <button type="submit" class="btn paper-btn primary">
+                        <span class="btn-icon">✓</span> Show It!
+                    </button>
+                    <button type="button" class="btn paper-btn secondary" id="btn-cancel-clue">
+                        <span class="btn-icon">✗</span> Cancel
+                    </button>
+                </div>
+            </form>
+        </section>
     </main>
 
     <footer class="footer">
-      <button id="btn-global-home" class="btn home-full" aria-label="Home">Home</button>
+        <button id="btn-global-home" class="btn home-full" aria-label="Home">
+            <span class="home-icon">🏠</span> Home
+        </button>
     </footer>
 
     <script src="./words.js"></script>
     <script src="./app.js"></script>
-  </body>
-  </html>
+</body>
 
-
+</html>

@@ -1,165 +1,542 @@
 :root {
-  /* Base palette */
-  --bg: #58355E; /* deep purple */
-  --fg: #EAE2B7; /* light sand */
-  --muted: #d9d1a8; /* softer sand for secondary text */
-  --accent: #F77F00; /* orange */
-  --accent-2: #FCBF49; /* golden */
-  --danger: #D62828; /* deep red for Home button */
-  --panel: #4b2e52; /* slightly darker panel */
+    /* Paper Craft Color Palette */
+    --kraft: #c9a66b;
+    --kraft-dark: #a67c3d;
+    --cream: #fff8dc;
+    --cream-dark: #f5e6c8;
+    --white: #fffefa;
+    --terracotta: #e07a5f;
+    --terracotta-dark: #c45d42;
+    --sage: #81b29a;
+    --sage-dark: #5a8a72;
+    --charcoal: #3d3d3d;
+    --pencil: #4a4a4a;
+    --yellow-note: #fff59d;
+    --pink-note: #f8bbd9;
+    --blue-note: #b3e5fc;
+
+    /* Typography */
+    --font-display: 'Caveat', cursive;
+    --font-body: 'Nunito', sans-serif;
 }
 
-* { box-sizing: border-box; }
-html, body, #app { height: 100%; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body,
+#app {
+    height: 100%;
+}
+
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+    background: var(--kraft);
+    color: var(--charcoal);
+    font-family: var(--font-body);
+    overflow: hidden;
 }
 
-.screen {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  padding: 24px;
+/* Paper Background */
+.paper-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
 }
-.hidden { display: none; }
+
+.paper-texture {
+    position: absolute;
+    inset: 0;
+    background:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.08;
+}
+
+.scattered-dots {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 20% 30%, var(--terracotta) 2px, transparent 2px),
+        radial-gradient(circle at 80% 20%, var(--sage) 3px, transparent 3px),
+        radial-gradient(circle at 60% 70%, var(--terracotta) 2px, transparent 2px),
+        radial-gradient(circle at 30% 80%, var(--sage) 2px, transparent 2px),
+        radial-gradient(circle at 90% 60%, var(--terracotta) 3px, transparent 3px);
+    opacity: 0.4;
+}
+
+/* Screens */
+.screen {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 24px;
+    z-index: 1;
+}
+
+.hidden {
+    display: none !important;
+}
 
 .center-col {
-  width: 100%;
-  max-width: 720px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Title Card */
+.title-card {
+    position: relative;
+    background: var(--white);
+    padding: 50px 60px;
+    text-align: center;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        0 8px 16px rgba(0, 0, 0, 0.1),
+        0 16px 32px rgba(0, 0, 0, 0.08);
+    transform: rotate(-1deg);
+}
+
+/* Tape pieces */
+.tape {
+    position: absolute;
+    width: 80px;
+    height: 30px;
+    background: rgba(255, 255, 200, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tape-left {
+    top: -10px;
+    left: 20px;
+    transform: rotate(-15deg);
+}
+
+.tape-right {
+    top: -10px;
+    right: 20px;
+    transform: rotate(12deg);
 }
 
 .app-title {
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--fg);
-  margin: 0 0 8px;
-  font-size: clamp(48px, 10vw, 96px);
-  line-height: 0.95;
-  text-shadow: 0 2px 0 rgba(0,0,0,0.25), 0 6px 24px rgba(247,127,0,0.35);
-  position: relative;
-  display: inline-block;
-  isolation: isolate;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(48px, 12vw, 80px);
+    color: var(--terracotta);
+    line-height: 1;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-/* Colorful fan flare behind the title */
-/* removed flare */
+.subtitle {
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--sage-dark);
+}
 
-.actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+/* Sticky Note */
+.sticky-note {
+    position: relative;
+    padding: 25px 30px;
+    min-width: 200px;
+    box-shadow:
+        3px 3px 8px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(0, 0, 0, 0.03);
+    transform: rotate(2deg);
+}
 
-/* Keep inputs and actions the same width */
-.center-col .input,
-.center-col .actions {
-  width: min(100%, 420px);
+.sticky-note.yellow {
+    background: var(--yellow-note);
+}
+
+.sticky-note.pink {
+    background: var(--pink-note);
+}
+
+.sticky-note.blue {
+    background: var(--blue-note);
+}
+
+.sticky-note::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.05) 50%);
+}
+
+.label {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--charcoal);
+    display: block;
+    margin-bottom: 12px;
+}
+
+.input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    border: 2px dashed var(--charcoal);
+    border-radius: 4px;
+    color: var(--charcoal);
+    padding: 12px 16px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input:focus {
+    background: rgba(255, 255, 255, 0.9);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(129, 178, 154, 0.3);
+}
+
+.input::placeholder {
+    color: rgba(74, 74, 74, 0.5);
+    font-style: italic;
+}
+
+/* Buttons */
+.actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .btn {
-  appearance: none;
-  border: 1px solid rgba(0,0,0,0.2);
-  background: rgba(0,0,0,0.15);
-  color: var(--fg);
-  padding: 12px 18px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.05s ease, background 0.2s ease, border-color 0.2s ease;
+    appearance: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font-body);
 }
-.btn:hover { background: rgba(0,0,0,0.25); }
-.btn:active { transform: translateY(1px); }
-.btn.primary {
-  border-color: #c46a00;
-  background: linear-gradient(180deg, #F77F00, #c46a00);
-  color: #1b0f1d;
+
+.paper-btn {
+    position: relative;
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.15),
+        4px 4px 8px rgba(0, 0, 0, 0.1);
 }
-.btn.ghost { background: transparent; border-color: rgba(0,0,0,0.25); color: var(--muted); }
 
-/* Global Home footer button */
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  padding: 0;
-  background: transparent;
+.paper-btn:hover {
+    transform: translateY(-2px) rotate(1deg);
+    box-shadow:
+        3px 3px 6px rgba(0, 0, 0, 0.15),
+        6px 6px 12px rgba(0, 0, 0, 0.1);
 }
-.btn.home-full {
-  width: 100%;
-  border-radius: 0;
-  border: none;
-  padding: 18px 24px;
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  color: #fff;
-  background: linear-gradient(180deg, #D94a4a, #D62828);
-  box-shadow: 0 -2px 0 rgba(0,0,0,0.1);
+
+.paper-btn:active {
+    transform: translateY(0) rotate(0deg);
 }
-.btn.home-full:hover { background: linear-gradient(180deg, #e05b5b, #d93a3a); }
-.btn.home-full:active { transform: none; }
 
-/* Hide footer on home screen */
-body[data-screen="home"] .footer { display: none; }
-
-.input {
-  width: 100%;
-  background: rgba(0,0,0,0.2);
-  border: 1px solid rgba(0,0,0,0.25);
-  border-radius: 12px;
-  color: var(--fg);
-  padding: 14px 16px;
-  outline: none;
-  font-size: 18px;
+.paper-btn.primary {
+    background: var(--terracotta);
+    color: var(--white);
 }
-.input:focus { border-color: var(--accent-2); box-shadow: 0 0 0 3px rgba(252,191,73,0.25); }
 
-.label { color: var(--muted); font-weight: 600; }
+.paper-btn.primary:hover {
+    background: var(--terracotta-dark);
+}
 
-/* Full-screen display */
+.paper-btn.secondary {
+    background: var(--cream);
+    color: var(--charcoal);
+    border: 2px solid var(--charcoal);
+}
+
+.paper-btn.secondary:hover {
+    background: var(--white);
+}
+
+.btn-icon {
+    font-size: 20px;
+}
+
+.pill-btn {
+    padding: 10px 20px;
+    background: var(--white);
+    color: var(--charcoal);
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.pill-btn:hover {
+    background: var(--cream);
+    transform: translateY(-1px);
+}
+
+/* Display Areas */
 .display-area {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 6vmin;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+    /* Leave room for footer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: var(--white);
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    box-sizing: border-box;
 }
+
+/* Countdown - override for countdown screen */
+#screen-countdown .display-area {
+    background: var(--kraft);
+}
+
+.countdown-circle {
+    width: 180px;
+    height: 180px;
+    background: var(--white);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        0 12px 24px rgba(0, 0, 0, 0.1),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.05);
+    border: 4px solid var(--sage);
+}
+
+.countdown-num {
+    font-family: var(--font-display);
+    font-size: 100px;
+    font-weight: 700;
+    color: var(--terracotta);
+}
+
 .display-text {
-  width: 100%;
-  text-align: center;
-  font-weight: 800;
-  line-height: 1;
-  color: var(--fg);
-  /* Base size; will be auto-fit by JS */
-  font-size: 10vmin;
-  white-space: nowrap;
-  overflow-wrap: normal;
-  word-break: normal;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--pencil);
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1;
+    /* Let JS control font-size */
 }
 
-.topbar { display: none; }
-
-/* Bigger countdown numbers */
-#screen-countdown .display-text {
-  font-size: 22vmin;
+/* Word Card */
+.word-card {
+    position: relative;
+    background: var(--white);
+    padding: 50px 70px;
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        0 16px 32px rgba(0, 0, 0, 0.1);
+    transform: rotate(1deg);
 }
 
-/* Larger home screen buttons */
-#screen-home .btn {
-  padding: 16px 24px;
-  font-size: 18px;
+.card-fold {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--cream-dark) 50%, var(--kraft) 50%);
 }
 
-/* Accessibility prefers-reduced-motion */
+.card-pin {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle at 40% 40%, #ff6b6b, #c92a2a);
+    border-radius: 50%;
+    box-shadow:
+        0 3px 6px rgba(0, 0, 0, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.word-text {
+    font-size: clamp(36px, 12vmin, 100px);
+    color: var(--pencil);
+}
+
+.card-underline {
+    position: absolute;
+    bottom: 25px;
+    left: 40px;
+    right: 40px;
+    height: 3px;
+    background: repeating-linear-gradient(90deg,
+            var(--pencil) 0px,
+            var(--pencil) 8px,
+            transparent 8px,
+            transparent 12px);
+    opacity: 0.3;
+}
+
+/* Notepad */
+.notepad {
+    width: 100%;
+    max-width: 350px;
+    background: var(--white);
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        0 12px 24px rgba(0, 0, 0, 0.1);
+    transform: rotate(-1deg);
+}
+
+.notepad-header {
+    background: var(--terracotta);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.spiral {
+    width: 20px;
+    height: 20px;
+    background: var(--kraft-dark);
+    border-radius: 50%;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.notepad-body {
+    padding: 30px;
+    background: repeating-linear-gradient(transparent,
+            transparent 28px,
+            #e0e0e0 28px,
+            #e0e0e0 30px);
+    background-position: 0 10px;
+}
+
+.notepad-body .label {
+    margin-bottom: 20px;
+}
+
+.notepad-body .input {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--pencil);
+    border-radius: 0;
+    padding: 8px 4px;
+}
+
+.notepad-body .input:focus {
+    box-shadow: none;
+    border-bottom-color: var(--terracotta);
+}
+
+/* Topbar */
+.topbar {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 10;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.btn.home-full {
+    width: 100%;
+    padding: 18px;
+    background: var(--terracotta);
+    color: var(--white);
+    border: none;
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn.home-full:hover {
+    background: var(--terracotta-dark);
+}
+
+.home-icon {
+    font-size: 20px;
+}
+
+body[data-screen="home"] .footer {
+    display: none;
+}
+
+/* Animations */
+@keyframes gentleFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-1deg);
+    }
+
+    50% {
+        transform: translateY(-5px) rotate(0deg);
+    }
+}
+
+.title-card {
+    animation: gentleFloat 4s ease-in-out infinite;
+}
+
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .btn { transition: none; }
+    .title-card {
+        animation: none;
+    }
+
+    .paper-btn,
+    .pill-btn {
+        transition: none;
+    }
 }
 
+/* Responsive */
+@media (max-width: 600px) {
+    .title-card {
+        padding: 35px 40px;
+    }
 
+    .app-title {
+        font-size: 42px;
+    }
+
+    .word-card {
+        padding: 35px 45px;
+    }
+
+    .tape {
+        width: 60px;
+        height: 22px;
+    }
+}
