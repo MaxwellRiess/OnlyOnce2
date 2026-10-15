@@ -11,12 +11,38 @@
   const btnCancelCountdown = document.getElementById('btn-cancel-countdown');
   const btnBackHome = document.getElementById('btn-back-home');
   const btnCancelClue = document.getElementById('btn-cancel-clue');
-  const btnGlobalHome = document.getElementById('btn-global-home');
   const countdownNumber = document.getElementById('countdownNumber');
   const displayText = document.getElementById('displayText');
   const clueForm = document.getElementById('clueForm');
   const clueInput = document.getElementById('clueInput');
-  const difficultySelect = document.getElementById('difficultySelect');
+
+  function selectedDifficulty() {
+    const checked = document.querySelector('input[name="difficulty"]:checked');
+    return checked ? checked.value : 'Any';
+  }
+
+  // Set the text on an overprinted element and replay its registration animation
+  function printText(el, text, animClass) {
+    el.textContent = text;
+    el.setAttribute('data-text', text);
+    el.classList.remove(animClass);
+    void el.offsetWidth;
+    el.classList.add(animClass);
+  }
+
+  // Like a compositor picking a fount: short words set wide, long words set condensed.
+  // In portrait the width is the limit, so everything goes narrower and prints bigger.
+  function stretchFor(text) {
+    const n = text.length;
+    const portrait = window.innerHeight > window.innerWidth;
+    let stretch;
+    if (n <= 3) stretch = 125;
+    else if (n <= 5) stretch = 108;
+    else if (n <= 7) stretch = 92;
+    else if (n <= 9) stretch = 78;
+    else stretch = 62;
+    return portrait ? Math.max(62, stretch - 30) : stretch;
+  }
 
   let countdownTimer = null;
 
@@ -37,8 +63,8 @@
   function startCountdown(seconds, onDone) {
     cancelCountdown();
     let remaining = seconds;
-    countdownNumber.textContent = String(remaining);
     setScreen('countdown');
+    printText(countdownNumber, String(remaining), 'tick');
     countdownTimer = setInterval(() => {
       remaining -= 1;
       if (remaining <= 0) {
@@ -46,13 +72,14 @@
         onDone();
         return;
       }
-      countdownNumber.textContent = String(remaining);
+      printText(countdownNumber, String(remaining), 'tick');
     }, 1000);
   }
 
   function showFullScreenText(text) {
-    displayText.textContent = text;
+    displayText.style.fontStretch = stretchFor(text) + '%';
     setScreen('display');
+    printText(displayText, text, 'reveal');
     // Auto-fit text to available width/height
     requestAnimationFrame(() => fitText(displayText));
   }
@@ -108,7 +135,7 @@
   // Actions
   btnGetWord.addEventListener('click', () => {
     startCountdown(3, () => {
-      const selected = difficultySelect ? difficultySelect.value : 'Any';
+      const selected = selectedDifficulty();
       const difficulty = selected === 'Any' ? undefined : selected;
       const word = (window.pickRandomWord && window.pickRandomWord(difficulty)) || 'Word';
       showFullScreenText(word);
@@ -134,12 +161,6 @@
     clueForm.reset();
   });
 
-  // Persistent footer Home button
-  btnGlobalHome.addEventListener('click', () => {
-    cancelCountdown();
-    setScreen('home');
-    clueForm.reset();
-  });
 
   clueForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -155,6 +176,7 @@
   // Re-fit on resize/orientation changes
   window.addEventListener('resize', () => {
     if (!screens.display.classList.contains('hidden')) {
+      displayText.style.fontStretch = stretchFor(displayText.textContent) + '%';
       requestAnimationFrame(() => fitText(displayText));
     }
   });

@@ -3,115 +3,101 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ONE WORD – Paper Craft Edition</title>
-    <meta name="description" content="Play Just One with a warm, handmade paper aesthetic" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#E7E9E3" />
+    <title>One Word</title>
+    <meta name="description" content="A companion for Just One: draw a secret word, or show your one-word clue to the table." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=riso4" />
 </head>
 
 <body data-screen="home">
-    <!-- Paper Background -->
-    <div class="paper-bg">
-        <div class="paper-texture"></div>
-        <div class="scattered-dots"></div>
-    </div>
+    <!-- Ink grain: punches tiny holes in the ink and roughens its edges, like a risograph drum -->
+    <svg class="defs" aria-hidden="true" focusable="false">
+        <filter id="riso" x="-2%" y="-2%" width="104%" height="104%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R"
+                yChannelSelector="G" result="rough" />
+            <feColorMatrix in="noise" type="matrix"
+                values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -12 0 0 0 9.9" result="speckle" />
+            <feComposite in="rough" in2="speckle" operator="in" />
+        </filter>
+    </svg>
 
     <main id="app">
-        <!-- Home Screen -->
+        <!-- Home -->
         <section id="screen-home" class="screen">
-            <div class="center-col">
-                <div class="title-card">
-                    <div class="tape tape-left"></div>
-                    <div class="tape tape-right"></div>
-                    <h1 class="app-title">One Word</h1>
-                    <p class="subtitle">~ a word association game ~</p>
-                </div>
+            <div class="home">
+                <header class="masthead">
+                    <h1 class="title print" data-text="One Word">One Word</h1>
+                    <p class="lede">A companion for Just One. Draw a secret word, or show your clue to the table.</p>
+                </header>
 
-                <div class="sticky-note yellow">
-                    <label for="difficultySelect" class="label">Pick difficulty:</label>
-                    <select id="difficultySelect" class="input">
-                        <option value="Any">Any</option>
-                        <option value="Easy">Easy</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Hard">Hard</option>
-                    </select>
-                </div>
+                <fieldset class="difficulty">
+                    <legend>Difficulty</legend>
+                    <div class="segments">
+                        <label><input type="radio" name="difficulty" value="Any" checked /><span>Any</span></label>
+                        <label><input type="radio" name="difficulty" value="Easy" /><span>Easy</span></label>
+                        <label><input type="radio" name="difficulty" value="Medium" /><span>Medium</span></label>
+                        <label><input type="radio" name="difficulty" value="Hard" /><span>Hard</span></label>
+                    </div>
+                </fieldset>
 
                 <div class="actions">
-                    <button id="btn-get-word" class="btn paper-btn primary">
-                        <span class="btn-icon">✎</span> Get a Word
+                    <button id="btn-get-word" class="btn btn-solid">
+                        <span class="btn-label">Get a word</span>
+                        <span class="btn-note">Three seconds to turn the screen away from the guesser</span>
                     </button>
-                    <button id="btn-give-clue" class="btn paper-btn secondary">
-                        <span class="btn-icon">✏</span> Give a Clue
+                    <button id="btn-give-clue" class="btn btn-line">
+                        <span class="btn-label">Give a clue</span>
+                        <span class="btn-note">Type one word and show it full screen</span>
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- Countdown Screen -->
+        <!-- Countdown -->
         <section id="screen-countdown" class="screen hidden" aria-live="polite">
-            <div class="display-area">
-                <div class="countdown-circle">
-                    <div id="countdownNumber" class="display-text countdown-num" aria-label="Countdown">3</div>
-                </div>
+            <div class="stage">
+                <div id="countdownNumber" class="count print" data-text="3" aria-label="Countdown">3</div>
+                <p class="stage-note">Turn the screen away from the guesser</p>
             </div>
-            <div class="topbar">
-                <button class="btn pill-btn" id="btn-cancel-countdown" aria-label="Cancel">← Back</button>
+            <div class="bar">
+                <button class="btn btn-quiet" id="btn-cancel-countdown">Cancel</button>
             </div>
         </section>
 
-        <!-- Display Screen (Word or Clue) -->
+        <!-- Word or clue, full screen -->
         <section id="screen-display" class="screen hidden">
-            <div class="display-area">
-                <div id="displayText" class="display-text" role="status" aria-live="polite"></div>
+            <div class="stage stage-word">
+                <div id="displayText" class="word print" role="status" aria-live="polite"></div>
             </div>
-            <div class="topbar">
-                <button class="btn pill-btn" id="btn-back-home">← Back</button>
+            <div class="bar">
+                <button class="btn btn-quiet" id="btn-back-home">Done</button>
             </div>
         </section>
 
-        <!-- Give a Clue Input Screen -->
+        <!-- Clue entry -->
         <section id="screen-clue-input" class="screen hidden">
-            <form id="clueForm" class="center-col" autocomplete="off">
-                <div class="notepad">
-                    <div class="notepad-header">
-                        <span class="spiral"></span>
-                        <span class="spiral"></span>
-                        <span class="spiral"></span>
-                        <span class="spiral"></span>
-                        <span class="spiral"></span>
-                    </div>
-                    <div class="notepad-body">
-                        <label for="clueInput" class="label">Write your clue here:</label>
-                        <input id="clueInput" class="input lined" type="text" inputmode="latin" pattern="[^\s]+"
-                            placeholder="one word only..." maxlength="40" required />
-                    </div>
-                </div>
-                <div class="actions">
-                    <button type="submit" class="btn paper-btn primary">
-                        <span class="btn-icon">✓</span> Show It!
-                    </button>
-                    <button type="button" class="btn paper-btn secondary" id="btn-cancel-clue">
-                        <span class="btn-icon">✗</span> Cancel
-                    </button>
+            <form id="clueForm" class="clue" autocomplete="off">
+                <label for="clueInput" class="clue-label">Your clue</label>
+                <input id="clueInput" class="clue-input" type="text" inputmode="text" pattern="[^\s]+"
+                    placeholder="One word" maxlength="40" autocapitalize="words" spellcheck="false" required />
+                <p class="clue-hint">No spaces. Matching clues cancel each other out, so be original.</p>
+                <div class="actions actions-row">
+                    <button type="submit" class="btn btn-solid"><span class="btn-label">Show clue</span></button>
+                    <button type="button" class="btn btn-quiet" id="btn-cancel-clue">Cancel</button>
                 </div>
             </form>
         </section>
     </main>
 
-    <footer class="footer">
-        <button id="btn-global-home" class="btn home-full" aria-label="Home">
-            <span class="home-icon">🏠</span> Home
-        </button>
-    </footer>
-
     <script src="./words.js"></script>
-    <script src="./app.js"></script>
+    <script src="./app.js?v=riso4"></script>
 </body>
 
 </html>
