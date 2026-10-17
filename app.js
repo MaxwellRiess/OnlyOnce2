@@ -173,8 +173,93 @@
     clueForm.reset();
   });
 
+  // How to play: a sheet of panels you swipe across
+  const howto = document.getElementById('howto');
+  const howtoSlides = document.getElementById('howtoSlides');
+  const slides = Array.from(howtoSlides.querySelectorAll('.slide'));
+  const pagerBars = Array.from(howto.querySelectorAll('.pager span'));
+  const btnHowtoPrev = document.getElementById('btn-howto-prev');
+  const btnHowtoNext = document.getElementById('btn-howto-next');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let currentSlide = 0;
+
+  // Always start from the first panel. The scroll position only sticks once the dialog is showing.
+  function openHowto() {
+    howto.showModal();
+    howtoSlides.scrollTo({ left: 0, behavior: 'auto' });
+    updateSlides();
+    howtoSlides.focus();
+  }
+
+  function closeHowto() {
+    if (!howto.open || howto.classList.contains('closing')) return;
+    if (reduceMotion.matches) {
+      howto.close();
+      return;
+    }
+    howto.classList.add('closing');
+    howto.addEventListener('animationend', () => {
+      howto.classList.remove('closing');
+      howto.close();
+    }, { once: true });
+  }
+
+  function goToSlide(i) {
+    const target = slides[Math.max(0, Math.min(slides.length - 1, i))];
+    howtoSlides.scrollTo({ left: target.offsetLeft, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+  }
+
+  // Each panel's distance from centre, in panel widths, drives the pink drum's lag
+  function updateSlides() {
+    const width = howtoSlides.clientWidth || 1;
+    const pos = howtoSlides.scrollLeft / width;
+    slides.forEach((slide, i) => slide.style.setProperty('--drift', (i - pos).toFixed(3)));
+
+    const index = Math.round(pos);
+    if (index === currentSlide && btnHowtoNext.dataset.ready) return;
+    currentSlide = index;
+    btnHowtoNext.dataset.ready = '1';
+    pagerBars.forEach((bar, i) => bar.classList.toggle('is-current', i === index));
+    btnHowtoPrev.classList.toggle('is-hidden', index === 0);
+    const last = index === slides.length - 1;
+    btnHowtoNext.querySelector('.btn-label').textContent = last ? 'Start playing' : 'Next';
+    slides.forEach((slide, i) => slide.toggleAttribute('inert', i !== index));
+  }
+
+  howtoSlides.addEventListener('scroll', () => requestAnimationFrame(updateSlides), { passive: true });
+  document.getElementById('btn-howto').addEventListener('click', openHowto);
+  document.getElementById('btn-howto-close').addEventListener('click', closeHowto);
+  btnHowtoPrev.addEventListener('click', () => goToSlide(currentSlide - 1));
+  btnHowtoNext.addEventListener('click', () => {
+    if (currentSlide === slides.length - 1) closeHowto();
+    else goToSlide(currentSlide + 1);
+  });
+
+  // Escape and backdrop taps slide the sheet out rather than snapping it shut
+  howto.addEventListener('cancel', (e) => {
+    e.preventDefault();
+    closeHowto();
+  });
+  howto.addEventListener('click', (e) => {
+    if (e.target === howto) closeHowto();
+  });
+  howto.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    goToSlide(currentSlide + (e.key === 'ArrowRight' ? 1 : -1));
+  });
+
+  // Show it once on a first visit
+  try {
+    if (!localStorage.getItem('oneword.seenHowto')) {
+      localStorage.setItem('oneword.seenHowto', '1');
+      openHowto();
+    }
+  } catch (_) {}
+
   // Re-fit on resize/orientation changes
   window.addEventListener('resize', () => {
+    if (howto.open) updateSlides();
     if (!screens.display.classList.contains('hidden')) {
       displayText.style.fontStretch = stretchFor(displayText.textContent) + '%';
       requestAnimationFrame(() => fitText(displayText));

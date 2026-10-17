@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#E7E9E3" />
     <title>One Word</title>
-    <meta name="description" content="A companion for Just One: draw a secret word, or show your one-word clue to the table." />
+    <meta name="description" content="A cooperative word game. Draw a secret word, or show your one-word clue to the table." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=riso4" />
+    <link rel="stylesheet" href="./styles.css?v=howto3" />
 </head>
 
 <body data-screen="home">
@@ -34,7 +34,8 @@
             <div class="home">
                 <header class="masthead">
                     <h1 class="title print" data-text="One Word">One Word</h1>
-                    <p class="lede">A companion for Just One. Draw a secret word, or show your clue to the table.</p>
+                    <p class="lede">Draw a secret word, or show your one-word clue to the table.</p>
+                    <button type="button" class="link-btn" id="btn-howto" aria-haspopup="dialog">How to play</button>
                 </header>
 
                 <fieldset class="difficulty">
@@ -96,8 +97,87 @@
         </section>
     </main>
 
-    <script src="./words.js?v=lists3"></script>
-    <script src="./app.js?v=riso4"></script>
+    <!-- How to play: a sheet that slides in, with panels you swipe across -->
+    <dialog id="howto" class="howto" aria-labelledby="howto-title">
+        <div class="howto-top">
+            <div class="pager" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <button type="button" class="btn btn-quiet howto-close" id="btn-howto-close">Close</button>
+        </div>
+
+        <div class="slides" id="howtoSlides" tabindex="-1">
+            <section class="slide" aria-label="Page 1 of 4">
+                <h2 id="howto-title" class="slide-title print" data-text="How to play">How to play</h2>
+                <p class="slide-lede">A word game you play together, not against each other.</p>
+                <p>You need three or more players, each with this app open on their own phone.</p>
+                <p>One player guesses a secret word. Everyone else gives them a clue, but each clue can only be one word.</p>
+                <p class="catch">The catch: if two players write the same clue, both are cancelled.</p>
+            </section>
+
+            <section class="slide" aria-label="Page 2 of 4">
+                <h2 class="slide-title print" data-text="Each round">Each round</h2>
+                <ol class="steps">
+                    <li>Choose a guesser. They close their eyes.</li>
+                    <li>Someone taps <strong>Get a word</strong>. Turn the screen away from the guesser during the countdown, then show the word to everyone else.</li>
+                    <li>Each clue-giver taps <strong>Give a clue</strong> and types one word. Keep it to yourself for now.</li>
+                    <li>While the guesser’s eyes are still closed, the clue-givers compare clues. Cancel any that match.</li>
+                    <li>The guesser opens their eyes and sees the clues that are left. They get one guess, or they can pass.</li>
+                </ol>
+                <p class="slide-after">Then someone else becomes the guesser.</p>
+            </section>
+
+            <section class="slide" aria-label="Page 3 of 4">
+                <h2 class="slide-title print" data-text="Clues">Clues</h2>
+                <h3>What counts as a match</h3>
+                <p>The same word, or a close version of it. Plurals and words from the same family both count.</p>
+                <ul class="pairs">
+                    <li><span>Dog</span><span>Dogs</span></li>
+                    <li><span>Prince</span><span>Princess</span></li>
+                    <li><span>Bake</span><span>Baker</span></li>
+                </ul>
+                <p>Obvious clues are the riskiest. The best ones help the guesser and surprise everyone else.</p>
+                <h3>Not allowed</h3>
+                <ul class="rules">
+                    <li>The secret word, or part of it</li>
+                    <li>The secret word in another language</li>
+                    <li>A word that sounds the same, like Knight for Night</li>
+                    <li>A made-up word</li>
+                </ul>
+                <p>Numbers, abbreviations and sounds are fine: 007, NASA, Shh.</p>
+            </section>
+
+            <section class="slide" aria-label="Page 4 of 4">
+                <h2 class="slide-title print" data-text="Difficulty">Difficulty</h2>
+                <dl class="levels">
+                    <div>
+                        <dt>Easy</dt>
+                        <dd>Everyday things you could point at.</dd>
+                        <dd class="samples">Apple, Bridge, Penguin</dd>
+                    </div>
+                    <div>
+                        <dt>Medium</dt>
+                        <dd>Less common things, or things with close look-alikes.</dd>
+                        <dd class="samples">Kayak, Cathedral, Platypus</dd>
+                    </div>
+                    <div>
+                        <dt>Hard</dt>
+                        <dd>Abstract ideas and concepts. You can’t point at them, so clues have to work harder.</dd>
+                        <dd class="samples">Nostalgia, Gravity, Karma</dd>
+                    </div>
+                </dl>
+                <p>Any draws from all three.</p>
+            </section>
+        </div>
+
+        <div class="howto-nav">
+            <button type="button" class="btn btn-quiet" id="btn-howto-prev">Back</button>
+            <button type="button" class="btn btn-solid" id="btn-howto-next"><span class="btn-label">Next</span></button>
+        </div>
+    </dialog>
+
+    <script src="./words.js?v=howto3"></script>
+    <script src="./app.js?v=howto3"></script>
 </body>
 
 </html>
