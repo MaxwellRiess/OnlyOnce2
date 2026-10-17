@@ -249,14 +249,6 @@
     goToSlide(currentSlide + (e.key === 'ArrowRight' ? 1 : -1));
   });
 
-  // Show it once on a first visit
-  try {
-    if (!localStorage.getItem('oneword.seenHowto')) {
-      localStorage.setItem('oneword.seenHowto', '1');
-      openHowto();
-    }
-  } catch (_) {}
-
   // Re-fit on resize/orientation changes
   window.addEventListener('resize', () => {
     if (howto.open) updateSlides();
